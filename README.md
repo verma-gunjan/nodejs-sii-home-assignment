@@ -7,6 +7,7 @@ This is a home assignment to build a Task Manager API using Node.js, Express, an
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
+- [Candidate Assignment Instructions](#candidate-assignment-instructions)
 - [Getting Started](#getting-started)
   - [1. Clone the repository](#1-clone-the-repository)
   - [2. Install dependencies](#2-install-dependencies)
@@ -37,6 +38,18 @@ This is a home assignment to build a Task Manager API using Node.js, Express, an
 - [Node.js](https://nodejs.org/) (v18.x or later recommended)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 - [PostgreSQL](https://www.postgresql.org/)
+
+## Candidate Assignment Instructions
+
+1.  **Fork the Repository**: Start by forking this repository to your personal GitHub account. Do not clone this repository directly.
+
+2.  **Clone Your Fork**: Clone your forked repository to your local machine to begin working on the assignment.
+
+3.  **Complete the Tasks**: Follow the setup guide in the "Getting Started" section below. Your main goal is to implement the features listed under "Next Steps / Future Enhancements". We encourage you to attempt as many tasks as your time allows; the more you complete, the better we can assess your skills.
+
+4.  **Submit for Review**: Once you are finished, ensure all your changes are pushed to your forked repository. Then, add `thalesvvikas` as a collaborator to your private forked repository so we can review your work.
+
+---
 
 ## Getting Started
 
