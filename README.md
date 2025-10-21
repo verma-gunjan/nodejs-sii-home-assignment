@@ -143,3 +143,40 @@ src/
 ├── utils/        # Utility functions
 └── server.js     # The application entry point
 ```
+
+## Next Steps / Future Enhancements
+
+Here are some suggestions for the next set of tasks for candidates to further enhance the project:
+
+-   **Pagination & Filtering**:
+    -   Implement pagination and filtering for the task list endpoint: `/api/tasks?page=1&limit=10&status=pending`.
+
+-   **Role-based Access Control (RBAC)**:
+    -   Introduce an `admin` role that has privileges to view all tasks from all users.
+
+-   **Soft Deletes**:
+    -   Implement a soft delete mechanism. Instead of permanently deleting tasks, mark them as `deleted` and add a `deletedAt` timestamp.
+
+-   **API Documentation**:
+    -   Integrate Swagger/OpenAPI to generate interactive API documentation, available at an endpoint like `/api/docs`.
+
+-   **Request Logging**:
+    -   Add a request logging middleware using a library like `morgan` or `winston` to log all incoming requests.
+
+-   **Enhanced Unit Test Coverage**:
+    -   Expand the Jest test suite to cover the complete authentication flow (login, register) and all CRUD operations for tasks.
+
+-   **Rate Limiting**:
+    -   Implement rate limiting on sensitive endpoints, especially login, to prevent brute-force attacks using a library like `express-rate-limit`.
+
+-   **Asynchronous Job Queue**:
+    -   Implement a background job queue for sending email notifications (e.g., on task creation or completion) using a library like `BullMQ` with Redis.
+
+## Extra Merits
+
+-   **Dockerization**:
+    -   Create a `Dockerfile` for the Node.js application and a `docker-compose.yml` file to orchestrate the application and the PostgreSQL database services.
+
+-   **Continuous Integration (CI)**:
+    -   Set up a CI pipeline using GitHub Actions to automatically run tests and lint checks on every push and pull request.
+```
