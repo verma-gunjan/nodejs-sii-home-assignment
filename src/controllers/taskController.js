@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
-const { Task } = require('../models');
+const { Task, User } = require('../models'); 
+const emailQueue = require('../queues/emailQueue')
 
 exports.getTasks = async (req, res, next) => {
   try {
@@ -46,6 +47,19 @@ exports.createTask = async (req, res, next) => {
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
     const { title, description, status } = req.body;
     const task = await Task.create({ title, description,status, userId: req.user.id });
+
+    // Fetch user's email
+    const user = await User.findByPk(req.user.id);
+
+    if (user && user.email) {
+      // Add a job to email queue
+      await emailQueue.add('taskCreated', {
+        to: user.email,
+        subject: 'New Task Created',
+        text: `Your task "${task.title}" has been created.`,
+      });
+    }
+
     res.status(201).json(task);
   } catch (err) { next(err); }
 };
@@ -56,6 +70,19 @@ exports.updateTask = async (req, res, next) => {
     if (!task) return res.status(404).json({ message: 'Task not found' });
     if (task.userId !== req.user.id) return res.status(403).json({ message: 'Forbidden' });
     await task.update(req.body);
+
+     // Fetch user's email
+     const user = await User.findByPk(req.user.id);
+
+     if (user && user.email) {
+      // Add a job to email queue
+      await emailQueue.add('taskUpdated', {
+        to: user.email,
+        subject: 'Task Updated',
+        text: `Your task "${task.title}" has been updated.`,
+      });
+    }
+
     res.json(task);
   } catch (err) { next(err); }
 };
