@@ -3,9 +3,38 @@ const { Task } = require('../models');
 
 exports.getTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.findAll({ where: { userId: req.user.id } });
-    res.json(tasks);
-  } catch (err) { next(err); }
+    // Extract query params
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const status = req.query.status;
+
+    const offset = (page - 1) * limit;
+
+    // Build where condition
+    let userTaskStatus = { userId: req.user.id };
+    if (status) {
+      userTaskStatus.status = status;
+    }
+
+    // Fetch tasks + total tasks count
+    const { rows: tasks, count: totalTasks } = await Task.findAndCountAll({
+      where: userTaskStatus,
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.json({
+      page,
+      limit,
+      totalTasks,
+      totalPages: Math.ceil(totalTasks / limit),
+      tasks,
+    });
+
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.createTask = async (req, res, next) => {
