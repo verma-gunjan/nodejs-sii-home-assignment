@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const authController = require('../controllers/authController');
+const loginLimiter = require('../middleware/rateLimiter')
 
 router.post(
     '/register',
@@ -15,5 +16,5 @@ router.post(
     ],
     authController.register
   );
-router.post('/login', authController.login);
+router.post('/login',loginLimiter, authController.login);
 module.exports = router;
