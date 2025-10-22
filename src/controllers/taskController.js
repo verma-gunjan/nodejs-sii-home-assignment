@@ -41,8 +41,8 @@ exports.createTask = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    const { title, description } = req.body;
-    const task = await Task.create({ title, description, userId: req.user.id });
+    const { title, description, status } = req.body;
+    const task = await Task.create({ title, description,status, userId: req.user.id });
     res.status(201).json(task);
   } catch (err) { next(err); }
 };
