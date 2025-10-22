@@ -3,25 +3,29 @@ const { Task } = require('../models');
 
 exports.getTasks = async (req, res, next) => {
   try {
-    // Extract query params
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
     const status = req.query.status;
 
-    const offset = (page - 1) * limit;
+    let userTaskStatus = {};
 
-    // Build where condition
-    let userTaskStatus = { userId: req.user.id };
+    if (req.user.role !== 'admin') {
+      // Non-admin: filter by their own tasks
+      userTaskStatus.userId = req.user.id;
+    }
+
     if (status) {
+      // Apply status filter for everyone
       userTaskStatus.status = status;
     }
 
-    // Fetch tasks + total tasks count
     const { rows: tasks, count: totalTasks } = await Task.findAndCountAll({
       where: userTaskStatus,
       limit,
       offset,
       order: [['createdAt', 'DESC']],
+      paranoid: false
     });
 
     res.json({
@@ -31,7 +35,6 @@ exports.getTasks = async (req, res, next) => {
       totalPages: Math.ceil(totalTasks / limit),
       tasks,
     });
-
   } catch (err) {
     next(err);
   }

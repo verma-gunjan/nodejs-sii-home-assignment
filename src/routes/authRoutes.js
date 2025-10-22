@@ -10,7 +10,8 @@ router.post(
         .notEmpty().withMessage('Username is required')
         .isString().withMessage('Username must be a string'),
       body('password')
-        .isLength({ min: 5 }).withMessage('Password must be at least 5 characters')
+        .isLength({ min: 5 }).withMessage('Password must be at least 5 characters'),
+      body('role').optional().isIn(['user', 'admin']).withMessage('Role must be either user or admin')
     ],
     authController.register
   );
