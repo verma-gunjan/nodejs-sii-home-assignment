@@ -193,3 +193,18 @@ Here are some suggestions for the next set of tasks for candidates to further en
 -   **Continuous Integration (CI)**:
     -   Set up a CI pipeline using GitHub Actions to automatically run tests and lint checks on every push and pull request.
 ```
+### Docker Setup
+
+- The project uses Docker Compose with 4 services:
+app – Node.js server (src/server.js)
+worker – Email worker (src/workers/emailWorker.js)
+postgres – PostgreSQL database with persistent volume
+redis – Redis server for BullMQ queues
+
+- install docker from [docker](https://docs.docker.com/) 
+- add env variable in .env
+    REDIS_HOST=redis
+    REDIS_PORT=6379
+    -   for the node mailer add
+        EMAIL_USER
+        EMAIL_PASS
